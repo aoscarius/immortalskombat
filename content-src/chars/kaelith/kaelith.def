@@ -1,0 +1,22 @@
+; Kaelith, the Frostbound Hunter. Original character for Immortals Kombat.
+[Info]
+name = "Kaelith"
+displayname = "Kaelith"
+versiondate = 10,11,2026
+mugenversion = 1.0
+author = "Immortals Kombat"
+pal.defaults = 1,2,3
+localcoord = 960,540
+
+[Files]
+cmd = kaelith.cmd
+cns = kaelith.cns
+st = kaelith.cns
+sprite = kaelith.sff
+anim = kaelith.air
+sound = kaelith.snd
+
+[Palette Keymap]
+x = 1
+y = 2
+z = 3

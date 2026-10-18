@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Immortals Kombat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Chakra+Petch:wght@400;500;700&family=Share+Tech+Mono&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js" defer></script>
+</head>
+<body>
+<div id="stage" role="application" aria-label="Immortals Kombat fighting game">
+  <canvas id="cv" width="960" height="540"></canvas>
+
+  <div id="hud" hidden>
+    <div class="side p1" id="hud1">
+      <canvas class="port" width="64" height="64"></canvas>
+      <div class="col">
+        <div class="nm"><b class="name">P1</b><span class="pips"><i></i><i></i></span></div>
+        <div class="bar"><div class="lag"></div><div class="fill"></div></div>
+        <div class="meter"><div class="mfill"></div><span class="mtxt">POWER</span></div>
+      </div>
+    </div>
+    <div class="clock"><span id="timer">99</span></div>
+    <div class="side p2" id="hud2">
+      <canvas class="port" width="64" height="64"></canvas>
+      <div class="col">
+        <div class="nm"><b class="name">P2</b><span class="pips"><i></i><i></i></span></div>
+        <div class="bar"><div class="lag"></div><div class="fill"></div></div>
+        <div class="meter"><div class="mfill"></div><span class="mtxt">POWER</span></div>
+      </div>
+    </div>
+    <div class="combo c1" id="combo1"></div>
+    <div class="combo c2" id="combo2"></div>
+  </div>
+
+  <div id="loading" hidden role="status"></div>
+  <pre id="dbg" hidden aria-hidden="true"></pre>
+  <div id="banner"></div><div id="sub"></div><div id="flash"></div>
+  <div id="stall" hidden>WAITING FOR OPPONENT…</div>
+  <div id="toast" role="status"></div>
+
+  <section class="scr title" id="scr-title">
+    <div class="logo"><span class="l1">Immortals</span><span class="l2"><b>K</b>ombat</span></div>
+    <p class="tag">A MUGEN-compatible 2D fighting engine in HTML5</p>
+    <nav class="menu" id="menu" aria-label="Main menu">
+      <button class="btn sel" data-act="arcade">Arcade</button>
+      <button class="btn" data-act="versus">Versus</button>
+      <button class="btn" data-act="online">Online</button>
+      <button class="btn" data-act="practice">Practice</button>
+      <button class="btn" data-act="roster">Fighters &amp; Stages</button>
+      <button class="btn" data-act="help">Controls</button>
+      <button class="btn" data-act="sound" id="btn-sound">Sound: On</button>
+    </nav>
+    <p class="hint"><kbd>W</kbd><kbd>S</kbd> / <kbd>&uarr;</kbd><kbd>&darr;</kbd> choose &nbsp; <kbd>J</kbd> / <kbd>Enter</kbd> confirm</p>
+  </section>
+
+  <section class="scr select" id="scr-select" hidden>
+    <h2 id="sel-title">CHOOSE YOUR FIGHTER</h2>
+    <div class="sel-body">
+      <div id="grid"></div>
+      <aside id="info"></aside>
+    </div>
+    <div class="sel-foot">
+      <div class="mgbox" id="mg-box">
+        <div class="brow"><button class="btn small" id="mg-pick-dir">Load MUGEN folder</button><button class="btn small" id="mg-pick-zip">Load ZIP / files</button><button class="btn small" id="sel-stage">Stage: Random</button></div>
+        <div>Characters and stages from <b>MUGEN</b> (SFF v1 and v2). Drop a folder or ZIP here. Files stay in your browser and are never uploaded.</div>
+        <div class="brow basebox"><label for="base-url">Content folder</label><input id="base-url" type="text" spellcheck="false" autocomplete="off" placeholder="assets/ or https://host/path/"><button class="btn small" id="base-load">Load folder</button></div>
+      <div id="mg-status"></div>
+        <input type="file" id="mg-dir" webkitdirectory multiple hidden><input type="file" id="mg-zip" accept=".zip,.def,.sff,.air,.cmd,.cns,.snd,.act,.txt,.mp3,.ogg,.wav" multiple hidden>
+      </div>
+      <p class="hint" id="sel-hint"></p>
+      <button class="btn small" id="sel-back">Back</button>
+    </div>
+  </section>
+
+  <section class="scr net" id="scr-net" hidden>
+    <h2>ONLINE</h2>
+    <div class="netgrid">
+      <div class="netbox"><h3>Host a match</h3>
+        <button class="btn small" id="net-host">Create room</button>
+        <div id="net-room" hidden><div>Room code</div><div id="net-code">------</div><button class="btn small" id="net-copy">Copy code</button></div>
+      </div>
+      <div class="netbox"><h3>Join a match</h3>
+        <input id="net-join-code" maxlength="10" placeholder="CODE" autocomplete="off" spellcheck="false" aria-label="Room code">
+        <button class="btn small" id="net-join">Join</button>
+      </div>
+    </div>
+    <div id="net-status" role="status"></div>
+    <p class="hint">Peer to peer: only controller inputs are sent. Both players need the same fighters; missing ones are sent automatically.</p>
+    <button class="btn small" id="net-back">Back</button>
+  </section>
+
+  <section class="scr result" id="scr-result" hidden>
+    <h2 id="res-title">VICTORY</h2>
+    <div class="who" id="res-who"></div>
+    <p class="tag" id="res-sub"></p>
+    <div class="row2" id="res-btns"></div>
+  </section>
+
+  <section class="scr help" id="scr-help" hidden>
+    <h2>CONTROLS</h2>
+    <div class="helpgrid">
+      <div><h3>Player 1</h3><table>
+        <tr><td>W A S D</td><td>Jump / back / crouch / forward</td></tr>
+        <tr><td>J &nbsp;K</td><td>Buttons X / Y (punches)</td></tr>
+        <tr><td>N &nbsp;M</td><td>Buttons A / B (kicks)</td></tr>
+        <tr><td>U &nbsp;I</td><td>Buttons Z / C</td></tr></table>
+        <h3 style="margin-top:1em">Player 2</h3><table>
+        <tr><td>Arrow keys</td><td>Move, jump, crouch</td></tr>
+        <tr><td>; &nbsp;'</td><td>Buttons X / Y</td></tr>
+        <tr><td>. &nbsp;/</td><td>Buttons A / B</td></tr>
+        <tr><td>[ &nbsp;]</td><td>Buttons Z / C</td></tr></table>
+        <p class="hint" style="text-align:left;margin-top:.8em">Gamepads work too. Esc or P pauses. <b>B</b> shows hit and hurt boxes, <b>T</b> changes the practice dummy. Hold back to block, as in MUGEN.</p></div>
+      <div><h3>Kaelith (base fighter)</h3><table>
+        <tr><td>&darr; &searr; &rarr; + X / Y</td><td>Frost Orb (X slow, Y fast)</td></tr>
+        <tr><td>&rarr; &darr; &searr; + X / Y</td><td>Rising Strike (anti-air)</td></tr>
+        <tr><td>&darr; &swarr; &larr; + A / B</td><td>Comet Kick</td></tr>
+        <tr><td>Y + B</td><td>Immortal Rage (1000 power)</td></tr>
+        <tr><td>&darr; + Y</td><td>Uppercut launcher</td></tr>
+        <tr><td>&darr; + B</td><td>Sweep (block low)</td></tr></table>
+        <h3 style="margin-top:1em">Debugging</h3><table>
+        <tr><td>Space</td><td>Cheat: full life and power</td></tr>
+        <tr><td>F2</td><td>Cheat: CPU opponent to 1 life (not in 2-player)</td></tr>
+        <tr><td>F3</td><td>Copy a diagnostic report (attach it to bug reports)</td></tr>
+        <tr><td>F4</td><td>Overlay: state, anim, frame, velocity per fighter</td></tr></table>
+        <p class="hint" style="text-align:left;margin-top:.8em">Imported fighters use their own move lists. Open <b>Fighters &amp; Stages</b> to load MUGEN characters and stages from a folder or ZIP.</p></div>
+    </div>
+    <button class="btn small" id="help-back">Back</button>
+  </section>
+
+  <section class="scr pause" id="scr-pause" hidden>
+    <h2>PAUSED</h2>
+    <nav class="menu" id="pmenu">
+      <button class="btn sel" data-act="resume">Resume</button>
+      <button class="btn" data-act="restart">Restart match</button>
+      <button class="btn" data-act="phelp">Controls</button>
+      <button class="btn" data-act="quit">Quit to menu</button>
+    </nav>
+  </section>
+</div>
+
+<div id="touch" aria-label="Touch controls">
+  <div class="dp">
+    <span></span><button data-k="up">&uarr;</button><span></span>
+    <button data-k="left">&larr;</button><span></span><button data-k="right">&rarr;</button>
+    <span></span><button data-k="down">&darr;</button><span></span>
+  </div>
+  <div class="ab">
+    <button data-k="lp">X</button><button data-k="hp">Y</button><button data-k="z">Z</button>
+    <button data-k="lk">A</button><button data-k="hk">B</button><button data-k="c">C</button>
+  </div>
+</div>
+<div id="foot">P1: WASD + J K N M U I &nbsp;|&nbsp; P2: arrows + ; ' . / [ ] &nbsp;|&nbsp; Esc pauses</div>
+
+<!-- engine -->
+<script src="js/core/util.js"></script>
+<script src="js/core/audio.js"></script>
+<script src="js/core/input.js"></script>
+<!-- MUGEN: file formats, content (virtual files, loaders, stages), engine -->
+<script src="js/mugen/format/parse.js"></script>
+<script src="js/mugen/format/sff.js"></script>
+<script src="js/mugen/format/snd.js"></script>
+<script src="js/mugen/content/vfs.js"></script>
+<script src="js/mugen/content/loader.js"></script>
+<script src="js/mugen/content/stage.js"></script>
+<script src="js/mugen/engine/expr.js"></script>
+<script src="js/mugen/engine/anim.js"></script>
+<script src="js/mugen/engine/defaults.js"></script>
+<script src="js/mugen/engine/common-states.js"></script>
+<script src="js/mugen/engine/fighter-input.js"></script>
+<script src="js/mugen/engine/fighter.js"></script>
+<script src="js/mugen/engine/helper.js"></script>
+<script src="js/mugen/engine/hitdef.js"></script>
+<script src="js/mugen/engine/controllers.js"></script>
+<script src="js/mugen/engine/world.js"></script>
+<script src="js/mugen/engine/draw.js"></script>
+<!-- game -->
+<script src="js/game/stage-fallback.js"></script>
+<script src="js/game/world.js"></script>
+<script src="js/game/ui.js"></script>
+<script src="js/game/roster.js"></script>
+<script src="js/game/content.js"></script>
+<script src="js/game/debug.js"></script>
+<script src="js/game/match.js"></script>
+<script src="js/game/select.js"></script>
+<script src="js/game/render.js"></script>
+<script src="js/net/netplay.js"></script>
+<!-- bundled packages (generated by tools/pack-assets.js) -->
+<script src="assets/packs.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

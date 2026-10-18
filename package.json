@@ -1,0 +1,16 @@
+{
+  "name": "immortals-kombat",
+  "version": "3.0.0",
+  "description": "A MUGEN-compatible HTML5 fighting engine and game",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build.js",
+    "serve": "node tools/serve.js",
+    "test": "node tests/run-all.js"
+  },
+  "devDependencies": {
+    "jszip": "3.10.1",
+    "prettier": "^3.3.3",
+    "terser": "5.36.0"
+  }
+}

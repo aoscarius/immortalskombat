@@ -1,0 +1,16 @@
+{
+ "version": 1,
+ "chars": [
+  {
+   "zip": "chars/kaelith.zip",
+   "name": "kaelith"
+  }
+ ],
+ "stages": [
+  {
+   "zip": "stages/ashen_gate.zip",
+   "name": "ashen_gate"
+  }
+ ],
+ "files": []
+}

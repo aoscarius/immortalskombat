@@ -1,0 +1,743 @@
+; Kaelith constants and states. Original code for Immortals Kombat.
+; Coordinates use localcoord 960x540 (1 unit = 1 screen pixel at 960x540).
+[Data]
+life = 1000
+attack = 100
+defence = 100
+fall.defence_up = 50
+liedown.time = 60
+airjuggle = 15
+sparkno = -1
+guard.sparkno = -1
+KO.echo = 0
+volume = 0
+IntPersistIndex = 60
+FloatPersistIndex = 40
+
+[Size]
+xscale = 1
+yscale = 1
+ground.back = 28
+ground.front = 32
+air.back = 24
+air.front = 24
+height = 170
+attack.dist = 150
+proj.attack.dist = 260
+proj.doscale = 0
+head.pos = -10, -170
+mid.pos = -10, -110
+shadowoffset = 0
+draw.offset = 0, 0
+
+[Velocity]
+walk.fwd = 4.6
+walk.back = -3.8
+run.fwd = 9, 0
+run.back = -9, -8
+jump.neu = 0, -19
+jump.back = -5.3
+jump.fwd = 5.6
+runjump.back = -5.6, -18
+runjump.fwd = 8, -18
+airjump.neu = 0, -18
+airjump.back = -5
+airjump.fwd = 5
+
+[Movement]
+airjump.num = 0
+airjump.height = 70
+yaccel = .95
+stand.friction = .85
+crouch.friction = .82
+
+[Statedef 200]
+type = S
+movetype = A
+physics = S
+juggle = 1
+poweradd = 40
+ctrl = 0
+anim = 200
+velset = 0, 0
+sprpriority = 2
+
+[State 200, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 28, 2
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 8, 9
+hitsound = 5,0
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 11
+ground.hittime = 13
+ground.velocity = -6
+guard.slidetime = 8
+guard.hittime = 10
+guard.velocity = -6.6000000000000005
+air.velocity = -4,-6
+air.hittime = 16
+airguard.velocity = -4,-2
+
+[State 200, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+
+[State 200, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 210]
+type = S
+movetype = A
+physics = S
+juggle = 3
+poweradd = 60
+ctrl = 0
+anim = 210
+velset = 0, 0
+sprpriority = 2
+
+[State 210, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 52, 5
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 10, 11
+hitsound = 5,1
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 17
+ground.velocity = -9
+guard.slidetime = 8
+guard.hittime = 10
+guard.velocity = -9.9
+air.velocity = -4,-6
+air.hittime = 16
+airguard.velocity = -4,-2
+
+[State 210, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,1
+
+[State 210, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 230]
+type = S
+movetype = A
+physics = S
+juggle = 1
+poweradd = 40
+ctrl = 0
+anim = 230
+velset = 0, 0
+sprpriority = 2
+
+[State 230, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 34, 2
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 9, 10
+hitsound = 5,0
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 14
+ground.velocity = -7
+guard.slidetime = 8
+guard.hittime = 10
+guard.velocity = -7.700000000000001
+air.velocity = -4,-6
+air.hittime = 16
+airguard.velocity = -4,-2
+
+[State 230, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+
+[State 230, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 240]
+type = S
+movetype = A
+physics = S
+juggle = 3
+poweradd = 70
+ctrl = 0
+anim = 240
+velset = 0, 0
+sprpriority = 2
+
+[State 240, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = S, NA
+damage = 66, 6
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 11, 12
+hitsound = 5,1
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 20
+ground.velocity = -12
+guard.slidetime = 8
+guard.hittime = 10
+guard.velocity = -13.200000000000001
+air.velocity = -4,-6
+air.hittime = 16
+airguard.velocity = -4,-2
+
+[State 240, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,1
+
+[State 240, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 400]
+type = C
+movetype = A
+physics = C
+juggle = 1
+poweradd = 40
+ctrl = 0
+anim = 400
+velset = 0, 0
+sprpriority = 2
+
+[State 400, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = C, NA
+damage = 24, 2
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 8, 9
+hitsound = 5,0
+guardsound = 6,0
+ground.type = Low
+ground.slidetime = 10
+ground.hittime = 12
+ground.velocity = -5
+guard.slidetime = 8
+guard.hittime = 10
+guard.velocity = -5.5
+air.velocity = -4,-6
+air.hittime = 16
+airguard.velocity = -4,-2
+
+[State 400, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+
+[State 400, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 430]
+type = C
+movetype = A
+physics = C
+juggle = 1
+poweradd = 40
+ctrl = 0
+anim = 430
+velset = 0, 0
+sprpriority = 2
+
+[State 430, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = C, NA
+damage = 30, 2
+guardflag = L
+hitflag = MAF
+priority = 3, Hit
+pausetime = 8, 9
+hitsound = 5,0
+guardsound = 6,0
+ground.type = Low
+ground.slidetime = 11
+ground.hittime = 13
+ground.velocity = -6
+guard.slidetime = 8
+guard.hittime = 10
+guard.velocity = -6.6000000000000005
+air.velocity = -4,-6
+air.hittime = 16
+airguard.velocity = -4,-2
+
+[State 430, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+
+[State 430, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 410]
+type = C
+movetype = A
+physics = C
+juggle = 5
+poweradd = 70
+ctrl = 0
+anim = 410
+velset = 0, 0
+sprpriority = 2
+
+[State 410, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,1
+
+[State 410, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = C, NA
+damage = 58, 6
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 11, 12
+hitsound = 5,1
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 22
+ground.velocity = -3, -15
+fall = 1
+fall.recover = 0
+guard.slidetime = 9
+guard.hittime = 12
+guard.velocity = -9
+air.velocity = -3, -15
+air.fall = 1
+airguard.velocity = -4,-2
+
+[State 410, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 440]
+type = C
+movetype = A
+physics = C
+juggle = 2
+poweradd = 60
+ctrl = 0
+anim = 440
+velset = 0, 0
+sprpriority = 2
+
+[State 440, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,1
+
+[State 440, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = C, NA
+damage = 48, 4
+guardflag = L
+hitflag = MAF
+priority = 3, Hit
+pausetime = 10, 11
+hitsound = 5,1
+guardsound = 6,0
+ground.type = Trip
+ground.slidetime = 14
+ground.hittime = 22
+ground.velocity = -6, -9
+fall = 1
+fall.recover = 0
+guard.slidetime = 10
+guard.hittime = 13
+guard.velocity = -10
+air.velocity = -5, -9
+
+[State 440, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 600]
+type = A
+movetype = A
+physics = A
+juggle = 2
+poweradd = 30
+ctrl = 0
+anim = 600
+sprpriority = 2
+
+[State 600, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+
+[State 600, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = A, NA
+damage = 30, 3
+guardflag = HA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 8, 9
+hitsound = 5,0
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 14
+ground.velocity = -5
+guard.slidetime = 8
+guard.hittime = 10
+guard.velocity = -8
+air.velocity = -4, -6
+air.hittime = 16
+airguard.velocity = -4,-2
+
+[Statedef 630]
+type = A
+movetype = A
+physics = A
+juggle = 2
+poweradd = 30
+ctrl = 0
+anim = 630
+sprpriority = 2
+
+[State 630, whoosh]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+
+[State 630, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = A, NA
+damage = 40, 3
+guardflag = HA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 8, 9
+hitsound = 5,0
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 14
+ground.velocity = -5
+guard.slidetime = 8
+guard.hittime = 10
+guard.velocity = -8
+air.velocity = -4, -6
+air.hittime = 16
+airguard.velocity = -4,-2
+
+[Statedef 1000]
+type = S
+movetype = A
+physics = S
+juggle = 1
+ctrl = 0
+anim = 1000
+velset = 0, 0
+sprpriority = 2
+poweradd = 50
+
+[State 1000, snd]
+type = PlaySnd
+trigger1 = Time = 8
+value = 1,0
+
+[State 1000, orb]
+type = Projectile
+trigger1 = AnimElem = 2
+projid = 1000
+projanim = 1100
+projhitanim = 1101
+projremanim = 1101
+projremove = 1
+projhits = 1
+projpriority = 2
+projmisstime = 1
+projscale = 1, 1
+offset = 78, -112
+velocity = 13, 0
+attr = S, SP
+damage = 40, 6
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 0, 10
+hitsound = 5,1
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 18
+ground.velocity = -7
+guard.slidetime = 10
+guard.hittime = 12
+guard.velocity = -9
+air.velocity = -5, -9
+air.hittime = 18
+
+[State 1000, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 1010]
+type = S
+movetype = A
+physics = S
+juggle = 1
+ctrl = 0
+anim = 1000
+velset = 0, 0
+sprpriority = 2
+poweradd = 50
+
+[State 1010, snd]
+type = PlaySnd
+trigger1 = Time = 8
+value = 1,0
+
+[State 1010, orb]
+type = Projectile
+trigger1 = AnimElem = 2
+projid = 1000
+projanim = 1100
+projhitanim = 1101
+projremanim = 1101
+projremove = 1
+projhits = 1
+projpriority = 2
+projmisstime = 1
+projscale = 1, 1
+offset = 78, -112
+velocity = 20, 0
+attr = S, SP
+damage = 52, 6
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 0, 10
+hitsound = 5,1
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 18
+ground.velocity = -7
+guard.slidetime = 10
+guard.hittime = 12
+guard.velocity = -9
+air.velocity = -5, -9
+air.hittime = 18
+
+[State 1010, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 1020]
+type = A
+movetype = A
+physics = A
+juggle = 4
+ctrl = 0
+anim = 1020
+sprpriority = 2
+poweradd = 80
+
+[State 1020, jump]
+type = VelSet
+trigger1 = Time = 0
+x = 2.5
+y = -18
+
+[State 1020, snd]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,1
+
+[State 1020, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+damage = 70, 7
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 12, 13
+hitsound = 5,1
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 16
+ground.hittime = 22
+ground.velocity = -3, -15
+fall = 1
+fall.recover = 0
+guard.slidetime = 10
+guard.hittime = 13
+guard.velocity = -9
+air.velocity = -3, -15
+air.fall = 1
+airguard.velocity = -4,-2
+
+[Statedef 1040]
+type = S
+movetype = A
+physics = N
+juggle = 3
+ctrl = 0
+anim = 1040
+velset = 0, 0
+sprpriority = 2
+poweradd = 60
+
+[State 1040, rush]
+type = VelSet
+trigger1 = AnimElemTime(2) >= 0 && AnimElemTime(2) < 18
+x = 12
+
+[State 1040, stop]
+type = VelSet
+trigger1 = AnimElemTime(3) >= 0
+x = 0
+
+[State 1040, snd]
+type = PlaySnd
+trigger1 = AnimElemTime(2) = 0
+value = 0,1
+
+[State 1040, hit]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+damage = 62, 6
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 10, 11
+hitsound = 5,1
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 20
+ground.velocity = -9
+guard.slidetime = 10
+guard.hittime = 13
+guard.velocity = -11
+air.velocity = -6, -9
+
+[State 1040, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 3000]
+type = S
+movetype = A
+physics = S
+juggle = 0
+ctrl = 0
+anim = 3000
+velset = 0, 0
+sprpriority = 3
+
+[State 3000, cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -1000
+
+[State 3000, pause]
+type = SuperPause
+trigger1 = Time = 0
+time = 30
+anim = -1
+sound = 1,0
+darken = 1
+
+[State 3000, wave]
+type = Projectile
+trigger1 = AnimElem = 3
+projid = 3000
+projanim = 3100
+projhitanim = 1101
+projremanim = 1101
+projremove = 0
+projhits = 6
+projpriority = 4
+projmisstime = 8
+offset = 90, -110
+velocity = 9, 0
+attr = S, HP
+damage = 90, 20
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 0, 12
+hitsound = 5,1
+guardsound = 6,0
+ground.type = High
+ground.slidetime = 16
+ground.hittime = 24
+ground.velocity = -12, -10
+fall = 1
+air.velocity = -9, -10
+air.fall = 1
+
+[State 3000, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1

@@ -1,0 +1,62 @@
+[Info]
+name = "Ashen Gate"
+displayname = "Ashen Gate"
+author = "Immortals Kombat"
+mugenversion = 1.0
+
+[Camera]
+startx = 0
+starty = 0
+boundleft = -150
+boundright = 150
+tension = 60
+
+[PlayerInfo]
+p1startx = -130
+p1starty = 0
+p2startx = 130
+p2starty = 0
+leftbound = -480
+rightbound = 480
+
+[Bound]
+screenleft = 20
+screenright = 20
+
+[StageInfo]
+zoffset = 462
+autoturn = 1
+resetBG = 1
+localcoord = 960,540
+
+[Shadow]
+color = 0,0,0
+intensity = 120
+yscale = .25
+
+[BGdef]
+spr = ashen_gate.sff
+
+[BG Sky]
+type = normal
+spriteno = 0,0
+layerno = 0
+start = 0,0
+delta = .08,1
+mask = 0
+
+[BG Ruins]
+type = normal
+spriteno = 1,0
+layerno = 0
+start = 0,0
+delta = .45,1
+mask = 1
+
+[BG Floor]
+type = normal
+spriteno = 2,0
+layerno = 0
+start = 0,0
+delta = 1,1
+mask = 1
